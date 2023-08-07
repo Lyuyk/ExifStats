@@ -30,7 +30,7 @@ bool MakeFilter::match(Exiv2::ExifData& exifData)
     try {
         make = QString(exifData["Exif.Image.Make"].toString().c_str());
     }
-    catch(Exiv2::AnyError& e) {
+    catch(std::exception e) {
         return false;
     }
 

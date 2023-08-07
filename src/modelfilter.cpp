@@ -30,7 +30,7 @@ bool ModelFilter::match(Exiv2::ExifData &exifData)
     try {
         model = QString(exifData["Exif.Image.Model"].toString().c_str());
     }
-    catch(Exiv2::AnyError& e) {
+    catch(std::exception& e) {
         return false;
     }
 

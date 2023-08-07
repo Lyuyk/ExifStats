@@ -65,9 +65,9 @@ float get35mmFocalMultiplier(const QString& make, const QString& model)
                     return 1;
                 }
                 if (canonSplit[2].startsWith("1D", Qt::CaseInsensitive)) {
-                    return 1.3;
+                    return 1.3f;
                 }
-                return 1.6;
+                return 1.6f;
             }
         }
     }
@@ -90,7 +90,7 @@ void EntryReader::run()
         qDebug() << file;
 
         try {
-            Exiv2::Image::AutoPtr image =
+            Exiv2::Image::UniquePtr image =
                 Exiv2::ImageFactory::open(file.toStdString());
 
             if (image.get() == 0) {
@@ -99,6 +99,7 @@ void EntryReader::run()
 
             image->readMetadata();
             Exiv2::ExifData &exifData = image->exifData();
+            //qDebug()<<"1";
 
             match = true;
 
@@ -106,7 +107,7 @@ void EntryReader::run()
                 make = QString(exifData["Exif.Image.Make"].toString().c_str()).trimmed();
                 model = QString(exifData["Exif.Image.Model"].toString().c_str()).trimmed();
             }
-            catch(Exiv2::AnyError& e) {}
+            catch(std::exception& e) {}
 
             if (filters.size() > 0) {
                 foreach(IFilter* filter, filters) {
@@ -127,7 +128,7 @@ void EntryReader::run()
             try {
                 focalLength = exifData["Exif.Photo.FocalLength"].toFloat();
             }
-            catch (Exiv2::AnyError& e) {}
+            catch (std::exception& e) {}
 
             focalLength35 = 0;
 
@@ -140,7 +141,7 @@ void EntryReader::run()
                     focalLength35 = 0;
                 }
             }
-            catch (Exiv2::AnyError& e) {}
+            catch (std::exception& e) {}
 
             if (focalLength35 < 1) {
                 focalLength35 = focalLength *
@@ -152,19 +153,19 @@ void EntryReader::run()
             try {
                 fNumber = exifData["Exif.Photo.FNumber"].toFloat();
             }
-            catch (Exiv2::AnyError& e) {}
+            catch (std::exception& e) {}
 
             iso = 0;
             try {
                 iso = exifData["Exif.Photo.ISOSpeedRatings"].toFloat();
             }
-            catch (Exiv2::AnyError& e) {}
+            catch (std::exception& e) {}
 
             exposureTime = 0;
             try {
                 exposureTime = exifData["Exif.Photo.ExposureTime"].toFloat();
             }
-            catch (Exiv2::AnyError& e) {}
+            catch (std::exception& e) {}
 
             if (focalLength35 < 0.1) {
                 focalLength35 = 0;

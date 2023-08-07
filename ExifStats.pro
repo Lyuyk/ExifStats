@@ -1,7 +1,12 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-08-14T20:45:54
 # -------------------------------------------------
-LIBS += -lexiv2
+QT += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+CONFIG += c++11
+
 TARGET = ExifStatistics
 TEMPLATE = app
 INCLUDEPATH += include/
@@ -33,3 +38,22 @@ RESOURCES += \
 win32 {
     RC_FILE = Exifstats.rc
 }
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../ProgramCache/exiv2-0.28.0-2019msvc64/lib/ -lexiv2
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../ProgramCache/exiv2-0.28.0-2019msvc64/lib/ -lexiv2
+else:unix: LIBS += -L$$PWD/../../../../ProgramCache/exiv2-0.28.0-2019msvc64/lib/ -lexiv2
+
+INCLUDEPATH += $$PWD/../../../../ProgramCache/exiv2-0.28.0-2019msvc64/include
+DEPENDPATH += $$PWD/../../../../ProgramCache/exiv2-0.28.0-2019msvc64/include
+
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../ProgramCache/exiv2-0.27.3-2019msvc64/lib/ -lexiv2
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../ProgramCache/exiv2-0.27.3-2019msvc64/lib/ -lexiv2d
+#else:unix: LIBS += -L$$PWD/../../../../ProgramCache/exiv2-0.27.3-2019msvc64/lib/ -lexiv2
+
+#INCLUDEPATH += $$PWD/../../../../ProgramCache/exiv2-0.27.3-2019msvc64/include
+#DEPENDPATH += $$PWD/../../../../ProgramCache/exiv2-0.27.3-2019msvc64/include
+
+unix|win32: LIBS += -L$$PWD/../../../../ProgramCache/exiv2-0.27.3-2019msvc64/lib/ -lexiv2-xmp
+
+INCLUDEPATH += $$PWD/../../../../ProgramCache/exiv2-0.27.3-2019msvc64/include
+DEPENDPATH += $$PWD/../../../../ProgramCache/exiv2-0.27.3-2019msvc64/include

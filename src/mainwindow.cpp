@@ -130,8 +130,8 @@ void MainWindow::on_btnStart_clicked()
     make = make.trimmed();
     model = model.trimmed();
 
-    makeList = make.split(',', QString::SkipEmptyParts);
-    modelList = model.split(',', QString::SkipEmptyParts);
+    makeList = make.split(',', Qt::SkipEmptyParts);
+    modelList = model.split(',', Qt::SkipEmptyParts);
 
     this->setCursor(Qt::WaitCursor);
 
